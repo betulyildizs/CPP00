@@ -1,19 +1,27 @@
+SRCS = megaphone.cpp
+
+NAME = megaphone
+
 CXX = c++
+
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = megaphone.cpp  
-EXEC = megaphone
+OBJS = $(SRCS:.cpp=.o)
 
-all: $(EXEC)
+all: $(NAME)
 
-$(EXEC): $(SRC)
-	$(CXX) $(CXXFLAGS) $(SRC) -o $(EXEC)
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(EXEC)
+	rm -f $(OBJS)
 
-re: clean all
+fclean: clean
+	rm -f $(NAME)
 
-check:
-	$(CXX) $(CXXFLAGS) $(SRC)
-	@echo "Code compiled successfully with -Wall -Wextra -Werror flags"
+re: fclean all
+
+.PHONY: all clean fclean re
